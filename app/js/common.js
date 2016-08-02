@@ -167,6 +167,13 @@ $(document).ready(function() {
 
 /*end***************************3d fixed head******************************/
 
+
+/**************************************************************************/
+$('.ha-header-front').clone(true).appendTo('.ha-header-perspective');
+$('.ha-header-front').filter(':odd').removeClass().addClass('ha-header-bottom');
+
+
+/**************************************************************************/
 	//Modernizr plugin if old browser like IE9 then run Jquery-Placeholdr
 		if (!Modernizr.input.placeholder) {
 			$('input,textarea').placeholder();

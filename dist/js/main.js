@@ -1,10 +1,9 @@
 $(document).ready(function() {
-
+	
 	$('.header-nav-open').on('click',function(){
 		$('.navigation-mobile').toggleClass('opened');
 		$('.page-overlay').toggleClass('hidden');
 	});
-
 
 	$(".navigation-mobile").css("height", $(window).height());
 
@@ -41,11 +40,66 @@ $(document).ready(function() {
 /**********************************************************************************************/
     if($(window).width() > 768)
     {
-    	console.log('> 767');
+    	/*start****************hide head > 500****************/
+    	var wnd = $(window),
+    		height = 500,
+
+            block = $('#ha-header');
+
+        wnd.scroll(function(){
+
+            var top = wnd.scrollTop();
+            console.log(top);
+        $('#ha-header').css('top', -top);
+
+        	if ( top > height) {
+    			$('#ha-header').css('top', 0);
+    		}
+
+	    });
+        /*end****************hide head > 500****************/
+
+    	/*start*****3d fixed head******/
+    	var $resizeHead = $('.resize-head'),
+		$timeUp = 800,
+		$timeDown = 0;
+
+		$resizeHead.waypoint(function(){
+			if ($('.banner').hasClass('padding-10') === !true) {
+				$('.banner').addClass('padding-10');
+			
+				$(".img-logo").fadeIn($timeUp, function() {    //для картинок
+					$(this).attr('src', 'img/icon-logo.png').slideDown($timeDown);
+				});
+			}
+			else {
+				$('.banner').removeClass('padding-10');
+				
+				$(".img-logo").slideUp($timeDown, function() {    //для картинок
+					$(this).attr('src', 'img/logo.png').slideDown($timeDown);
+				});
+				
+			}
+		},{ offset: '-40%' });
+
+		$resizeHead.waypoint(function(){
+			if ($('#ha-header').hasClass('shadow-2') === true) {
+				
+				$('#ha-header').removeClass('shadow-2');
+
+				
+			}
+			else {
+				$('#ha-header').addClass('shadow-2');
+				
+			}
+		},{ offset: '-80%' });
+
+
+
+		/*end*****3d fixed head******/
 
     } else {
-
-    	//$('nav').after('<div class="page-overlay"></div>');
 
 		$('.menu ul').each(function(i) { // Check each submenu:
 		if ($.cookie('submenuMark-' + i)) {  // If index of submenu is marked in cookies:
@@ -84,14 +138,14 @@ $(document).ready(function() {
 		});
 
 		function cookieSet(index) {
-		$.cookie('submenuMark-' + index, 'opened', {expires: null, path: '/'}); // Set mark to cookie (submenu is shown):
+		$.cookie('submenuMark-' + index, 'opened', {expires: null, path: '/'}); 
 		}
 		function cookieDel(index) {
-		$.cookie('submenuMark-' + index, null, {expires: null, path: '/'}); // Delete mark from cookie (submenu is hidden):
+		$.cookie('submenuMark-' + index, null, {expires: null, path: '/'}); 
 		}
     }
 
-/*start********************************************3d fixed head*************************************************/
+/*start***************************3d fixed head******************************/
 
 	var $head = $( '#ha-header' ),
 		$el = $('.ha-waypoint'),
@@ -108,9 +162,10 @@ $(document).ready(function() {
 			$head.attr('class', 'ha-header ' + $animClassUp);
 			console.log($head.attr('class', 'ha-header ' + $animClassUp));
 		}
-	}, { offset: '0%' } );
+	}, { offset: '-45%' } );
 
-/*end********************************************3d fixed head*************************************************/
+
+/*end***************************3d fixed head******************************/
 
 	//Modernizr plugin if old browser like IE9 then run Jquery-Placeholdr
 		if (!Modernizr.input.placeholder) {
@@ -122,4 +177,3 @@ $(window).on('load', function() {
     $(".loader-inner").fadeOut(); 
     $(".loader").delay(400).fadeOut("slow");
 });
-
